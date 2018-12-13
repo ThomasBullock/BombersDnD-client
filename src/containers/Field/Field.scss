@@ -1,0 +1,41 @@
+@import '../../styles/styles.scss';
+
+.field {
+	flex: 1 1 95%;
+	height: 100vh;
+	position: relative;
+	background: url('../../img/Oval.jpg');
+	background-color: #50554F;
+	background-size: contain;
+	background-position: center;
+	background-repeat: no-repeat; 
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-around;
+	
+
+	@include elem('container') {
+		display: flex;
+	}
+
+}
+
+
+
+// .field__wrapper {
+// 		// position: absolute;
+// 		display: flex;
+// 		flex-wrap: wrap;
+// 		justify-content: space-around;
+// 		height: 100%;
+// }
+
+.field-enter {
+  opacity: 0.01;	
+}
+
+.field-enter.field-enter-active {
+  opacity: 1;
+  transition: opacity 1500ms ease-in;
+}
+

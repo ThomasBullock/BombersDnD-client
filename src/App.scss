@@ -1,0 +1,17 @@
+.main {
+	margin: 0 auto;
+
+	@media (min-width: 992px) { 
+		width: 90%;
+	}
+
+	@media (min-width: 1200px) { 
+		width: 80%;
+	}
+
+
+}
+
+.floating-menu-button {
+	position: absolute;
+}

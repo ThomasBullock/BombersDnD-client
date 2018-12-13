@@ -1,0 +1,50 @@
+@import '../styles/styles.scss';
+
+.player {
+    flex: 0 1 32%;
+    position: relative;
+    background: $jet;
+    color: $vapor;
+    height: 85px;
+
+    @include elem('number') {
+        position: absolute;
+        color: $smoke;
+        top: 0;
+        left: $margin-small / 2;
+        z-index: 200;
+        font-size: $base-font-size * 1.4;
+    }
+
+    @include elem('name') {
+        position: absolute;
+        top: 0;
+        left: 2px;
+        z-index: 300;
+    }
+
+    @include elem('surname') {
+        position: absolute;
+        bottom: 0;
+        right: 2px;
+        z-index: 300;        
+    }
+
+    @include elem('img-wrapper') {
+        position: relative;
+        width: 100%;
+        // height: auto;
+        z-index: 200;
+    }
+
+    @include elem('img') {
+        @include img-responsive();
+        // height: 100%; // overide mixin height auto;
+        height: 85px;
+        z-index: 300;
+        // position: absolute;
+        // bottom: 0;
+        margin: 0 auto;
+        // left: auto;
+    }
+}

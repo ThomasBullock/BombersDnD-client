@@ -1,0 +1,6 @@
+@mixin form() {
+    margin: $margin-large auto;
+    width: 60%;
+    display: flex;
+    padding: $padding-base;
+}

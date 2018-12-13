@@ -1,0 +1,31 @@
+@import '../styles/styles.scss';
+
+.player-card {
+	
+	@include elem('header') {
+		background: $gainsboro;
+
+		div {
+			display: flex;	
+		}
+	}
+
+	@include elem('stats') {
+		display: flex;
+		justify-content: space-between;
+	}
+	
+	@include elem('photo') {
+		@media (min-width: 992px) { 
+			// max-height: 310px;
+		}
+	
+		@media (min-width: 1200px) { 
+			// max-height: 310px;
+		}
+
+		margin-top: -50px;
+	}
+
+
+}

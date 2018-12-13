@@ -1,0 +1,19 @@
+/* ================================= 
+  BEM create element / modifier 
+==================================== */
+
+@mixin elem($element) {
+	
+	&__#{$element} {
+		@content;	
+	}
+	
+}
+
+@mixin mod($modifier) {
+	
+	&--#{$modifier} {
+		@content;	
+	}
+	
+}

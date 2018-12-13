@@ -1,0 +1,21 @@
+@import '../../../styles/styles.scss';
+
+
+.addplayer {
+    padding: $padding-base;
+
+    form {
+        margin: 0 auto;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        background: $vapor;
+        padding: $padding-base;
+        width: 80%;
+    }
+
+    input {
+        flex: 1 1 50%;
+        margin-top: $padding-base;
+    }
+}

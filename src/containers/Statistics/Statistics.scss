@@ -1,0 +1,28 @@
+@import '../../styles/styles.scss';
+
+.statistics {
+    background: $oil;
+    flex: 1 1 5%;
+    display: flex;
+    flex-direction: column;
+
+
+    @include elem('heading') {
+        padding: $padding-base;
+        list-style: none;
+        margin: 0;
+        display: flex;
+        justify-content: space-between;
+        color: $silver;        
+    }
+
+    @include elem('list') {
+        padding: $padding-base;
+        list-style: none;
+        margin: 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        color: $silver;        
+    }
+}

@@ -1,0 +1,24 @@
+// border
+@mixin border($value) {
+  border: 1px solid $value;
+}
+
+@mixin border-bottom($value) {
+  border-bottom: 1px solid $value;
+}
+
+@mixin border-top($value) {
+  border-top: 1px solid $value;
+}
+
+@mixin border-left($value) {
+  border-left: 1px solid $value;
+}
+
+@mixin border-right($value) {
+  border-right: 1px solid $value;
+}
+
+@mixin border-radius($value) {
+  border-radius: $value;
+}

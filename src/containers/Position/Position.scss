@@ -1,0 +1,118 @@
+@import '../../styles/styles.scss';
+
+@mixin position-base() {
+	transition: all $base-transition-time ease-in;
+	position: relative;
+	z-index: 1000;
+	// background: $oil;
+	// padding: $padding-small;
+	// height: 16.66%;
+    // max-height: 120px;
+    // padding: 15px;
+	// background: #333;
+	@include drop-shadow(3);
+	&:hover {
+		cursor: pointer;
+		background: $smoke;
+		// transform: translate(0px, -5px);
+		// transform: scale(1.05);
+		// @include drop-shadow(4);
+	}	
+}
+
+.position {
+    @include position-base();
+	flex: 0 1 20%;
+	margin: 2.08% 6.666%;
+	background: $jet;
+	height: 85px;
+	// height: 12%;
+	// max-height: 12%;
+	// min-height: 12%;
+
+	@include mod('selected') {
+		background: $aluminum;
+		transform: translate(0px, -3px) scale(1.03);
+		// transform: scale(1.01);
+		@include drop-shadow(5);
+		&:hover {
+			// background: green;
+		}
+ 	}
+
+	@include mod('left-pocket') {
+        @include position-base();
+		flex: 0 1 20%;
+		margin: 2.08% 0.166% 2.08% 13.166%;
+	}
+
+	@include mod('right-pocket') {
+        @include position-base();
+		flex: 0 1 20%;
+		margin: 2.08% 13.166% 2.08% 0.166%;
+	}	
+
+	@include mod('left-flank') {
+        @include position-base();
+		flex: 0 1 20%;
+		margin: 2.08% 2.416% 2.08% 8.916%;
+    }
+    
+	@include mod('right-flank') {
+        @include position-base();
+		flex: 0 1 20%;
+		margin: 2.08% 8.916% 2.08% 2.416%;
+	}    
+
+	@include mod('bench') {
+        @include position-base();
+		flex: 0 1 22%;
+		margin: 2.08% 1.5%;
+	}
+
+
+
+	@include elem('border') {
+		padding: $padding-base;
+		background-color: white;			
+
+		&:hover {
+			background-color: green;			
+		}
+
+		@include mod('selected') {
+			background-color: red;
+		}
+	}
+
+	@include elem('content') {
+		background: transparentize($jet, .5);
+		position: relative;				
+	}
+
+	@include elem('name') {
+		// this should be a mixin!
+		color: $vapor;
+		position: absolute;
+	  left: 50%;
+	  top: $padding-base;
+	  transform: translate(-50%, -50%);		
+	}
+	
+}
+
+
+.position__photo {
+	@include img-responsive;
+	margin: 0 auto;
+	// height: 15vh;	
+}
+
+.position-enter {
+	opacity: 0.01;
+}
+
+.position-enter-active {
+  opacity: .8;
+  transition: opacity 500ms ease-in;	
+}

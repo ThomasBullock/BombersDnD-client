@@ -1,0 +1,11 @@
+@import '../../styles/styles.scss';
+
+.players {
+    @include elem('control') {
+
+    }
+
+    @include elem('filter') {
+        width: 100%;
+    }
+}

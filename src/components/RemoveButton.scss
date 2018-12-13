@@ -1,0 +1,12 @@
+@import '../styles/styles.scss';
+
+.remove-btn {
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 5500;
+
+    @include elem('icon') {
+        fill: black;
+    }
+}

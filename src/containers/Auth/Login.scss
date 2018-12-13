@@ -1,0 +1,8 @@
+@import '../../styles/styles.scss';
+
+.login {
+
+    @include elem('form') {
+        @include form();
+    }
+}
