@@ -1,4 +1,5 @@
 import React from 'react';
+import Immutable from 'immutable';
 import { func, object } from 'prop-types';
 import { connect } from 'react-redux';
 import {
@@ -12,7 +13,7 @@ import FlatButton from 'material-ui/FlatButton';
 import './Card.scss';
 import moment from 'moment';
 
-const PlayerCard = ({ player, addPlayer, resetHandler, selectedPosition }) => {
+const PlayerCard = ({ player, addPlayer, resetHandler }) => {
   const {
     name,
     surname,
@@ -23,7 +24,8 @@ const PlayerCard = ({ player, addPlayer, resetHandler, selectedPosition }) => {
     height,
     primary,
     secondary
-  } = player;
+  } = player.toJS();
+  // console.log(name, imageUrl);
   const age = moment().diff(dob, 'years');
   return (
     <Card className="player-card">

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { bool, func, number, object, string } from 'prop-types';
 import { DragSource } from 'react-dnd';
 import { ItemTypes } from '../constants/itemTypes';
-import { addPlayer, removePlayer } from '../modules/squad';
+import { addPlayer, removePlayer } from '../modules/i_squad';
 import './Player.scss';
 
 const playerSource = {
@@ -14,6 +14,7 @@ const playerSource = {
     };
   },
   endDrag(props, monitor) {
+    console.log(props);
     if (monitor.didDrop()) {
       // console.log(props);
       const dropResult = monitor.getDropResult();
@@ -71,7 +72,7 @@ class Player extends Component {
         {/* <span className="player__name">{player.name}</span>
         <span className="player__surname">{player.surname}</span> */}
         <div className="player__img-wrapper">
-          <img className="player__img" src={player.imageUrl} alt={`${player.name} ${player.surname}`} />
+          <img className="player__img" src={player.get('imageUrl')} alt={`${player.get('name')} ${player.get('surname')}`} />
         </div>
       </div>
     );

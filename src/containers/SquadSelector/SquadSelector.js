@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { array, func } from 'prop-types';
+import { array, func, object } from 'prop-types';
 import { connect } from 'react-redux';
 import { DragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
@@ -10,10 +10,6 @@ import Field from '../Field/Field';
 import Players from '../Players/Players';
 
 class SquadSelector extends Component {
-  componentWillMount() {
-    // console.log('components mounted')
-    // this.props.requestPlayerList();
-  }
 
   render() {
     const { players } = this.props;
@@ -29,13 +25,13 @@ class SquadSelector extends Component {
 }
 
 SquadSelector.propTypes = {
-  players: array.isRequired,
+  players: object.isRequired,
   requestPlayerList: func.isRequired
 };
 
 const mapStateToProps = state => {
   return {
-    players: state.players
+    players: state.get('players')
   };
 };
 

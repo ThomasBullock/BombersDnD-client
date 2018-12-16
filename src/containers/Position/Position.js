@@ -6,7 +6,7 @@ import { Paper } from 'material-ui';
 import Player from '../../components/Player';
 import NoPlayer from '../../components/common/NoPlayer';
 import classNames from 'classnames';
-import { addPlayer, removePlayer, resetSquad } from '../../modules/squad';
+import { addPlayer, removePlayer, resetSquad } from '../../modules/i_squad';
 import { ItemTypes } from '../../constants/itemTypes';
 import { DropTarget } from 'react-dnd';
 import './Position.scss';
@@ -70,13 +70,14 @@ class Position extends Component {
       connectDropTarget,
       isOver
     } = this.props;
+    // console.log(playerId, selected);
     const positionClasses = classNames({
       'position' : true,
       'position--selected' : selected,
       [`${classes}`] : classes,
       'position-over' : isOver
     })
-    console.log(isOver)
+    // console.log(isOver)
     return connectDropTarget(
       <div className={positionClasses}>
         <Paper         
@@ -96,8 +97,8 @@ class Position extends Component {
         {(playerId !== null) ? (
           <Player
             id={playerId}
-            player={players[playerId]}
-            inSquad={players[playerId].inSquad}
+            player={players.get(playerId)}
+            inSquad={players.getIn([playerId, 'inSquad'])} //[playerId].inSquad}
             selectHandler={selectHandler}
             addPlayer={addPlayer}
             changePlayerSelectionStatus={changePlayerSelectionStatus}

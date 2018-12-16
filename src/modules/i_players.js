@@ -1,6 +1,8 @@
 import axios from 'axios';
 import Immutable from 'immutable';
 import moment from 'moment';
+import { createSelector } from 'reselect'
+import _ from 'lodash';
 import { imgUrlGenerator } from './helpers';
 const baseUrl =
   process.env.NODE_ENV === 'production'
@@ -43,7 +45,30 @@ export const changePlayerSelectionStatus = playerId => ({
 });
 export const resetPlayersSelection = () => ({ type: RESET_PLAYERS_SELECTION });
 
-const initialState = [
+// Selectors 
+
+// create select functions to pick of pieces of state we need
+const playersSelector = state => state.players
+const selectedPlayerId = state => state.player
+
+const getPlayer = (players, selectedPlayerId) => {
+  console.log(players, selectedPlayerId);
+  const selectedPlayer = _.filter(
+    players,
+    player => _.contains(selectedPlayerId, player.id)
+  );
+
+  return selectedPlayer
+}
+
+export const playerSelector = createSelector(
+  playersSelector, // pick off a piece of state
+  selectedPlayerId, // pick off a piece of state
+  getPlayer // last arg is the func that has our select logic
+)
+
+
+const initialState = Immutable.fromJS([
   {
     id: null,
     name: null,
@@ -51,53 +76,52 @@ const initialState = [
     games: null,
     dob: null
   }
-];
+]);
 
 const player = (state = initialState, action) => {
+  console.log(action);
   switch (action.type) {
     case RECEIVE_PLAYER_LIST:
       // console.log(action.players)
       // 	console.log(state)
-      return action.players.map(obj => {
+      return Immutable.fromJS(action.players.map(obj => {
         obj.inSquad = false;
         obj.imageUrl = imgUrlGenerator(obj);
         return obj;
-      });
+      }));
     case RESET_PLAYERS_SELECTION:
-      return Object.assign(
-        [...state],
-        state.map((item, i) => {
-          return {
-            id: item.id,
-            name: item.name,
-            imageUrl: imgUrlGenerator(item),
-            games: item.games,
-            dob: item.dob,
-            height: item.height,
-            status: item.status,
-            surname: item.surname,
-            primary: item.primary,
-            secondary: item.secondary,
-            inSquad: false
-          };
+      return state.update(players => {
+        return players.map(player => {
+          return player.set('inSquad', false)
         })
-      );
+      })
     case CHANGE_PLAYER_SELECTION_STATUS:
-      const updatedPlayer = state.filter((player, i) => {
-        return player.id === action.playerId;
-      })[0];
-      console.log(updatedPlayer.inSquad);
-      updatedPlayer.inSquad = !updatedPlayer.inSquad;
-      console.log(updatedPlayer);
-      let updatedState = state.map(player => {
-        if (player.id === updatedPlayer.id) {
-          return updatedPlayer;
-        } else {
-          return player;
-        }
-      });
-      console.log(updatedState);
-      return Object.assign(updatedState);
+        return state.update(action.playerId, (player) => {
+          console.log(player)
+          return player.set('inSquad', !player.get('inSquad'))
+        })
+
+        // console.log(state.toJS())
+        // // state.update()
+        // return state.update(action.playerId, (player) => {
+        //   return player.inSquad = !player.inSquad
+        // })
+
+      // const updatedPlayer = state.filter((player, i) => {
+      //   return player.get('id') === action.playerId;
+      // }).get(0);
+      // // console.log(updatedPlayer.get('inSquad'));
+      // updatedPlayer.set('inSquad', !updatedPlayer.get('inSquad'));
+      // console.log(updatedPlayer);
+      // let updatedState = state.map(player => {
+      //   if (player.id === updatedPlayer.id) {
+      //     return updatedPlayer;
+      //   } else {
+      //     return player;
+      //   }
+      // });
+      // console.log(updatedState);
+      // return Immutable.fromJS(Object.assign(updatedState));
 
     case DELETE_PLAYER_FROM_LIST:
       return Object.assign(

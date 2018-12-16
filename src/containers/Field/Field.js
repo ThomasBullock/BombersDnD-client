@@ -2,22 +2,23 @@ import React, { Component, Fragment } from 'react';
 import { array, func, object } from 'prop-types';
 import { connect } from 'react-redux';
 
-import { addPlayer, removePlayer, selectPosition } from '../../modules/squad';
+import { addPlayer, removePlayer, selectPosition } from '../../modules/i_squad';
 import './Field.scss';
 
 import Statistics from '../Statistics/Statistics';
 import Player from '../../components/Player';
 import { selectPlayer } from '../../modules/player';
-import { changePlayerSelectionStatus, resetPlayersSelection } from '../../modules/players';
+import { changePlayerSelectionStatus, resetPlayersSelection } from '../../modules/i_players';
 import Position from '../Position/Position';
 
 class Field extends Component {
   selectedPlayerArray() {
+    // console.log(this.props.players, this.props.squad);
     const selectedPlayerArray = [];
     // console.log(this.props.players)
     this.props.squad.forEach( (position) => {
-      if(position.playerId !== null) {
-        selectedPlayerArray.push(this.props.players[position.playerId])
+      if(position.get('playerId') !== null) {
+        selectedPlayerArray.push(this.props.players[position.get('playerId')])
       }
     })
     return selectedPlayerArray;
@@ -50,11 +51,11 @@ class Field extends Component {
       return (
         <Position
           classes={positionClass}
-          key={pos.position}
-          id={pos.id}
-          position={pos.position}
-          selected={pos.selected}
-          playerId={pos.playerId}
+          key={pos.get('position')}
+          id={pos.get('id')}
+          position={pos.get('position')}
+          selected={pos.get('selected')}
+          playerId={pos.get('playerId')}
           selectPosition={this.props.selectPosition}
           selectHandler={this.props.selectPlayer}
           addPlayer={this.props.addPlayer}
@@ -90,14 +91,14 @@ Field.propTypes = {
   resetPlayersSelection: func.isRequired,
   changePlayerSelectionStatus: func.isRequired,  
   selectPosition: func.isRequired,
-  squad: array.isRequired,
-  players: array.isRequired
+  squad: object.isRequired,
+  players: object.isRequired
 };
 
 const mapStateToProps = state => {
   return {
-    squad: state.squad,
-    players: state.players
+    squad: state.get('squad'),
+    players: state.get('players')
   };
 };
 

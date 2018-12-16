@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { array } from 'prop-types';
+import { array, object } from 'prop-types';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router'; 
 import RoutesComponent from './routes/RoutesComponent';
@@ -33,12 +33,12 @@ class App extends Component {
 }	
 
 App.propTypes = {
-	players: array.isRequired
+	players: object.isRequired
 }
 
 const mapStateToProps = (state) => {
 	return {
-		players: state.players
+		players: state.get('players')
 	}
 }
 

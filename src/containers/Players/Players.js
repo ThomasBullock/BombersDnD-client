@@ -8,14 +8,17 @@ import PlayerCard from '../../components/Card';
 import PlayerList from '../../components/PlayerList';
 import Loader from '../../components/common/Loader';
 
+// import { playerSelector } from 
+
 import { array, bool, func, number, object, string } from 'prop-types';
 
 import {
   changePlayerSelectionStatus,
-  resetPlayersSelection
-} from '../../modules/players';
+  resetPlayersSelection,
+  playerSelector
+} from '../../modules/i_players';
 import { selectPlayer } from '../../modules/player';
-import { addPlayer, removePlayer, resetSquad } from '../../modules/squad';
+import { addPlayer, removePlayer, resetSquad } from '../../modules/i_squad';
 
 class Players extends Component {
   constructor(props) {
@@ -28,28 +31,23 @@ class Players extends Component {
 
   addPlayerHandler(playerId, positionId) {
     return () => {
-      console.log('handler fired')
-      // console.log(arguments);
-      console.log(this.props.squad[positionId].playerId)
       const { squad } = this.props;
+      const targetPosPlayer = squad.getIn([positionId, 'playerId'])
       // position already contains same player
         // return
-      if(squad[positionId].playerId === playerId) {
-        console.log(`pos contains ${squad[positionId].playerId} trying to add ${playerId}`);
+      if(targetPosPlayer === playerId) {
         return;
       // An empty position
-      } else if(squad[positionId].playerId === null) {
+      } else if(targetPosPlayer === null) {
         // Add player and change players selection status
-        console.log('An empty position Add player and change players selection status');
           if(squad.filter(pos => pos.playerId === playerId).length === 0) {
-            console.log('yes')
             this.props.changePlayerSelectionStatus(playerId);  // need to add a true / false overide paramater    
           }  
           this.props.addPlayer(playerId, positionId);
-      } else if(squad[positionId].playerId !== null && squad[positionId].playerId !== playerId) {
+      } else if(targetPosPlayer !== null && targetPosPlayer !== playerId) {
             // Position contains another player
           // change existing players selection status
-          this.props.changePlayerSelectionStatus(squad[positionId].playerId);   
+          this.props.changePlayerSelectionStatus(targetPosPlayer);   
           // Add player and change players selection status
           this.props.addPlayer(playerId, positionId);
           this.props.changePlayerSelectionStatus(playerId);     
@@ -69,21 +67,25 @@ class Players extends Component {
 
   render() {
     const { players, squad } = this.props;
-    const selected = players.length > 1 && players[0];
+    console.log(players, squad);
+    console.log(players.size)
+    const selected = players.size > 1 && players.get(0);
+    // console.log(selected.toJS());
+    if(this.props.selectedPosition) {
+      console.log(this.props.selected.get('name'), this.props.selectedPosition.get('id'));
+    }
     // console.log(typeof this.addPlayerHandler(this.props.selected.id, this.props.selectedPosition.id));
     if (players) {
       return (
         <div className="col-lg-3">
-          { (players.length > 1) ?
+          { (players.size > 1) ?
           <PlayerCard
             player={this.props.selected}
-            addPlayer={this.addPlayerHandler(this.props.selected.id, this.props.selectedPosition.id)}
+            addPlayer={this.addPlayerHandler(this.props.selected.get('id'), this.props.selectedPosition.get('id'))}
             removePlayer={this.props.removePlayer}
             resetHandler={this.resetHandler()}
             resetSquad={this.props.resetSquad}
-            resetPlayersSelection={this.props.resetPlayersSelection}
-            selectedPosition={this.props.selectedPosition}
-            
+            resetPlayersSelection={this.props.resetPlayersSelection} 
           /> : 
           (
             <Loader />
@@ -106,7 +108,7 @@ class Players extends Component {
 
             </SelectField >
           </div>
-          {(players.length > 1) ?
+          {(players.size > 1) ?
           (<PlayerList
             filter={this.state.filter}
             squad={squad}
@@ -137,22 +139,25 @@ Players.propTypes = {
   changePlayerSelectionStatus: func.isRequired,
   resetPlayersSelection: func.isRequired,
   resetSquad: func.isRequired,
-  players: array.isRequired,
+  players: object.isRequired,
   removePlayer: func.isRequired,
   selectPlayer: func.isRequired,
-  squad: array.isRequired,
+  squad: object.isRequired,
 }
 
 const mapStateToProps = state => {
+  // console.log(state.get('players'))
+  // console.log(state.get('squad').filter(pos => {
+  //   // console.log(pos.get('selected'))
+  //   return pos.get('selected') === true
+  // }))
   return {
-    squad: state.squad,
-    players: state.players,
-    selected: state.players[state.player],
-    selectedPosition: state.squad.filter((item, i) => {
-      if (item.selected === true) {
-        return item;
-      }
-    })[0]
+    selectedPlayer: playerSelector(state.get('players')),
+    squad: state.get('squad'), //state.squad,
+    // players: state.players,
+    players: state.get('players'),
+    selected: state.getIn(['players', state.get('player')]),  //players[state.player],
+    selectedPosition: state.get('squad').filter(pos => pos.get('selected') === true).get(0) || state.getIn(['squad', 0]),   //state.squad.filter((item, i) => {
   };
 };
 
