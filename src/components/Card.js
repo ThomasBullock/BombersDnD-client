@@ -42,11 +42,11 @@ const PlayerCard = ({ player, addPlayer, resetHandler, selectedPosition }) => {
               <span>Ht: {height}cm</span>
               <span>Games: {games}</span>
             </div>
-            <div className="player-card__stats">
+            {/* <div className="player-card__stats">
               <span>Games: {games}</span>
               <span>Games: {games}</span>
               <span>Games: {games}</span>
-            </div>
+            </div> */}
           </CardText>
         }>
         <img className="player-card__photo" src={imageUrl} />

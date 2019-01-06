@@ -57,8 +57,8 @@ class Statistics extends Component {
                 <h2 className="statistics__heading">{moment(Date.now()).format('YYYY')}</h2>
                 <ul className="statistics__list">
                     <li><span>Goals: </span><span>{this.props.squad && this.averageStat('goals_18', true)}</span></li>
-                    <li><span>Disposals: </span><span>{this.props.squad && this.averageStat('height')}</span></li>
-                    <li><span>Tackles: </span><span>{this.props.squad && this.averageStat('games')}</span></li>
+                    <li><span>Disposals: </span><span>{this.props.squad && this.averageStat('disposals_18')}</span></li>
+                    <li><span>Tackles: </span><span>{this.props.squad && this.averageStat('tackles_18')}</span></li>
                 </ul>                       
             </div>
         );
